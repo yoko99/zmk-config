@@ -18,3 +18,8 @@
 #     artifact-name: corne_left_with_studio
 #
 ---
+include:
+  - board: bluemicro840_v1
+    shield: corne_left
+  - board: bluemicro840_v1
+    shield: corne_right
