@@ -12,10 +12,11 @@
 };
 
 / {
-    /* ---------------------------
-     * RGB LED (左側サムクラスタ内) 定義
-     * --------------------------- */
-    underglow {
+    chosen {
+        zmk,underglow = &underglow;
+    };
+
+    underglow: underglow {
         compatible = "zmk,rgb-underglow";
         gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         chain-length = <1>;
