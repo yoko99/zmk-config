@@ -1,4 +1,3 @@
-
 #include "m3d_q.dtsi"
 
 /* ---------------------------
@@ -17,32 +16,35 @@
  * --------------------------- */
 &pinctrl {
     spi3_default: spi3_default {
-        spi3_pins: pins {
-            psels = <NRF_PSEL(SPIM_MOSI, 0, 5)>; /* D5 を MOSI に設定 */
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 6)>; /* D6 を MOSI に設定 */
         };
     };
+
     spi3_sleep: spi3_sleep {
-        spi3_sleep_pins: pins {
-            psels = <NRF_PSEL(SPIM_MOSI, 0, 5)>;
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 6)>;
             low-power-enable;
         };
     };
 };
 
 &spi3 {
+    compatible = "nordic,nrf-spim";
     status = "okay";
+
     pinctrl-0 = <&spi3_default>;
     pinctrl-1 = <&spi3_sleep>;
     pinctrl-names = "default", "sleep";
 
     led_strip: ws2812@0 {
         compatible = "worldsemi,ws2812-spi";
-        reg = <0>;
-        spi-max-frequency = <4000000>;   /* 4 MHz 推奨 */
-        chain-length = <1>;              /* 今回は 1 個の LED */
-        spi-one-frame = <0x70>;          /* WS2812 / SK6812 固有フレーム */
+        reg = <0>;                    /* SPI のレジスタ (必須) */
+        spi-max-frequency = <4000000>; /* 4 MHz 推奨 */
+        chain-length = <1>;           /* 今回は 1 個の LED */
+        spi-one-frame = <0x70>;       /* WS2812 / SK6812 固有フレーム */
         spi-zero-frame = <0x40>;
-        color-mapping = <0 1 2>;         /* RGB 順 */
+        color-mapping = <0 1 2>;      /* RGB 順 */
     };
 };
 
