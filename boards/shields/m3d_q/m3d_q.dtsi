@@ -2,11 +2,11 @@
 
 / {
     chosen {
-        zmk,kscan = &k0;
+        zmk,kscan = &kscan0;
         zmk,matrix-transform = &mtx0;
     };
 
-    kscan0: k0 {
+    kscan0: kscan0 {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "col2row";
         wakeup-source;
@@ -16,7 +16,7 @@
                     <&xiao_d 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&xiao_d 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
 
-        /* 列GPIOは overlay で定義することが多いです */
+        /* 列GPIOは overlay で定義 */
     };
 
     mtx0: mtx0 {
