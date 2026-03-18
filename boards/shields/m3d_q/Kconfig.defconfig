@@ -1,0 +1,35 @@
+if SHIELD_M3D_Q_LEFT
+
+config ZMK_KEYBOARD_NAME
+    string
+    default "m3d_q"
+
+config ZMK_SPLIT
+    bool
+    default y
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    bool
+    default y
+
+config ZMK_RGB_UNDERGLOW
+    bool
+    default y
+
+config WS2812_STRIP
+    bool
+    default y
+
+endif
+
+if SHIELD_M3D_Q_RIGHT
+
+config ZMK_SPLIT
+    bool
+    default y
+
+config ZMK_SPLIT_ROLE_PERIPHERAL
+    bool
+    default y
+
+endif
