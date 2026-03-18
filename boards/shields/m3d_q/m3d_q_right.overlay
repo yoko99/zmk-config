@@ -1,18 +1,22 @@
 #include "m3d_q.dtsi"
 
-/ {
+/* ---------------------------
+ * 右手専用キーマトリクス列 GPIO
+ * --------------------------- */
+&kscan0 {
+    col-gpios = <&xiao_d 4 GPIO_ACTIVE_HIGH>,
+                <&xiao_d 3 GPIO_ACTIVE_HIGH>,
+                <&xiao_d 2 GPIO_ACTIVE_HIGH>,
+                <&xiao_d 1 GPIO_ACTIVE_HIGH>,
+                <&xiao_d 0 GPIO_ACTIVE_HIGH>;
+};
+
+/* ---------------------------
+ * ZMK で使用する kscan と matrix-transform を選択
+ * --------------------------- */
+&{/} {
     chosen {
         zmk,kscan = &kscan0;
         zmk,matrix-transform = &mtx0;
     };
-};
-
-&kscan0 {
-    col-gpios = <
-        &xiao_d 6 GPIO_ACTIVE_HIGH
-        &xiao_d 3 GPIO_ACTIVE_HIGH
-        &xiao_d 2 GPIO_ACTIVE_HIGH
-        &xiao_d 1 GPIO_ACTIVE_HIGH
-        &xiao_d 0 GPIO_ACTIVE_HIGH
-    >;
 };
