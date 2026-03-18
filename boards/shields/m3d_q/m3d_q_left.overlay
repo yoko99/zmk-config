@@ -13,13 +13,13 @@
 
 / {
     /* ---------------------------
-     * underglow LED
+     * Underglow LED (左側のみ)
      * --------------------------- */
     underglow: underglow {
         compatible = "zmk,rgb-underglow";
         gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         chain-length = <1>;
-        color-mapping = <0 1 2>;
+        color-mapping = <0 1 2>;  /* 実際の LED チップに合わせて変更可能 */
     };
 
     chosen {
@@ -31,67 +31,60 @@
      * --------------------------- */
     behaviors {
 
+        /* レイヤーごとのカラー設定 */
         l_base: l_base {
             compatible = "zmk,led-layer";
             layer = <0>;
             color = <0 0 0>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         };
 
         l_media: l_media {
             compatible = "zmk,led-layer";
             layer = <1>;
             color = <255 192 203>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         };
 
         l_nav: l_nav {
             compatible = "zmk,led-layer";
             layer = <2>;
             color = <0 255 255>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         };
 
         l_mouse: l_mouse {
             compatible = "zmk,led-layer";
             layer = <3>;
             color = <255 255 0>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         };
 
         l_sym: l_sym {
             compatible = "zmk,led-layer";
             layer = <4>;
             color = <0 255 0>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         };
 
         l_num: l_num {
             compatible = "zmk,led-layer";
             layer = <5>;
             color = <0 0 255>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         };
 
         l_fun: l_fun {
             compatible = "zmk,led-layer";
             layer = <6>;
             color = <255 0 0>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         };
 
         button_hold: button_hold {
             compatible = "zmk,led-layer";
             layer = <7>;
             color = <255 255 255>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         };
 
+        /* BLE・スリープイベント */
         ble_connected: ble_connected {
             compatible = "zmk,led-event";
             event = "zmk_ble_connected";
             color = <0 255 0>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
             fade = <500>;
             repeat = <0>;
         };
@@ -100,7 +93,6 @@
             compatible = "zmk,led-event";
             event = "zmk_ble_disconnected";
             color = <255 0 0>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
             fade = <500>;
             repeat = <0>;
         };
@@ -109,7 +101,6 @@
             compatible = "zmk,led-event";
             event = "zmk_ble_pairing";
             color = <0 0 255>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
             fade = <500>;
             repeat = <0>;
         };
@@ -118,7 +109,6 @@
             compatible = "zmk,led-event";
             event = "zmk_sleep_enter";
             color = <255 255 255>;
-            gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
             fade = <500>;
         };
     };
