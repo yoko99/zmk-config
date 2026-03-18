@@ -11,105 +11,130 @@
                 <&xiao_d 0 GPIO_ACTIVE_HIGH>;
 };
 
-/ {
-    /* ---------------------------
-     * Underglow LED (左側のみ)
-     * --------------------------- */
-    underglow: underglow {
-        compatible = "zmk,rgb-underglow";
-        gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
-        chain-length = <1>;
-        color-mapping = <0 1 2>;  /* 実際の LED チップに合わせて変更可能 */
+/* ---------------------------
+ * SPI3 接続の LED strip (SK6812 / WS2812)
+ * --------------------------- */
+&pinctrl {
+    spi3_default: spi3_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 5)>; /* D5 を MOSI に設定 */
+        };
+    };
+    spi3_sleep: spi3_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 5)>;
+            low-power-enable;
+        };
+    };
+};
+
+&spi3 {
+    status = "okay";
+    pinctrl-0 = <&spi3_default>;
+    pinctrl-1 = <&spi3_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    led_strip: ws2812@0 {
+        compatible = "worldsemi,ws2812-spi";
+        reg = <0>;
+        spi-max-frequency = <4000000>;   /* 4 MHz 推奨 */
+        chain-length = <1>;              /* 今回は 1 個の LED */
+        spi-one-frame = <0x70>;          /* WS2812 / SK6812 固有フレーム */
+        spi-zero-frame = <0x40>;
+        color-mapping = <0 1 2>;         /* RGB 順 */
+    };
+};
+
+/* ---------------------------
+ * ZMK に選択する LED を通知
+ * --------------------------- */
+chosen {
+    zmk,underglow = &led_strip;
+};
+
+/* ---------------------------
+ * LED behaviors (レイヤー・イベント LED)
+ * --------------------------- */
+behaviors {
+
+    /* レイヤーごとのカラー設定 */
+    l_base: l_base {
+        compatible = "zmk,led-layer";
+        layer = <0>;
+        color = <0 0 0>;
     };
 
-    chosen {
-        zmk,underglow = &underglow;
+    l_media: l_media {
+        compatible = "zmk,led-layer";
+        layer = <1>;
+        color = <255 192 203>;
     };
 
-    /* ---------------------------
-     * LED behaviors
-     * --------------------------- */
-    behaviors {
+    l_nav: l_nav {
+        compatible = "zmk,led-layer";
+        layer = <2>;
+        color = <0 255 255>;
+    };
 
-        /* レイヤーごとのカラー設定 */
-        l_base: l_base {
-            compatible = "zmk,led-layer";
-            layer = <0>;
-            color = <0 0 0>;
-        };
+    l_mouse: l_mouse {
+        compatible = "zmk,led-layer";
+        layer = <3>;
+        color = <255 255 0>;
+    };
 
-        l_media: l_media {
-            compatible = "zmk,led-layer";
-            layer = <1>;
-            color = <255 192 203>;
-        };
+    l_sym: l_sym {
+        compatible = "zmk,led-layer";
+        layer = <4>;
+        color = <0 255 0>;
+    };
 
-        l_nav: l_nav {
-            compatible = "zmk,led-layer";
-            layer = <2>;
-            color = <0 255 255>;
-        };
+    l_num: l_num {
+        compatible = "zmk,led-layer";
+        layer = <5>;
+        color = <0 0 255>;
+    };
 
-        l_mouse: l_mouse {
-            compatible = "zmk,led-layer";
-            layer = <3>;
-            color = <255 255 0>;
-        };
+    l_fun: l_fun {
+        compatible = "zmk,led-layer";
+        layer = <6>;
+        color = <255 0 0>;
+    };
 
-        l_sym: l_sym {
-            compatible = "zmk,led-layer";
-            layer = <4>;
-            color = <0 255 0>;
-        };
+    button_hold: button_hold {
+        compatible = "zmk,led-layer";
+        layer = <7>;
+        color = <255 255 255>;
+    };
 
-        l_num: l_num {
-            compatible = "zmk,led-layer";
-            layer = <5>;
-            color = <0 0 255>;
-        };
+    /* BLE・スリープイベント */
+    ble_connected: ble_connected {
+        compatible = "zmk,led-event";
+        event = "zmk_ble_connected";
+        color = <0 255 0>;
+        fade = <500>;
+        repeat = <0>;
+    };
 
-        l_fun: l_fun {
-            compatible = "zmk,led-layer";
-            layer = <6>;
-            color = <255 0 0>;
-        };
+    ble_disconnected: ble_disconnected {
+        compatible = "zmk,led-event";
+        event = "zmk_ble_disconnected";
+        color = <255 0 0>;
+        fade = <500>;
+        repeat = <0>;
+    };
 
-        button_hold: button_hold {
-            compatible = "zmk,led-layer";
-            layer = <7>;
-            color = <255 255 255>;
-        };
+    ble_pairing: ble_pairing {
+        compatible = "zmk,led-event";
+        event = "zmk_ble_pairing";
+        color = <0 0 255>;
+        fade = <500>;
+        repeat = <0>;
+    };
 
-        /* BLE・スリープイベント */
-        ble_connected: ble_connected {
-            compatible = "zmk,led-event";
-            event = "zmk_ble_connected";
-            color = <0 255 0>;
-            fade = <500>;
-            repeat = <0>;
-        };
-
-        ble_disconnected: ble_disconnected {
-            compatible = "zmk,led-event";
-            event = "zmk_ble_disconnected";
-            color = <255 0 0>;
-            fade = <500>;
-            repeat = <0>;
-        };
-
-        ble_pairing: ble_pairing {
-            compatible = "zmk,led-event";
-            event = "zmk_ble_pairing";
-            color = <0 0 255>;
-            fade = <500>;
-            repeat = <0>;
-        };
-
-        sleep_enter: sleep_enter {
-            compatible = "zmk,led-event";
-            event = "zmk_sleep_enter";
-            color = <255 255 255>;
-            fade = <500>;
-        };
+    sleep_enter: sleep_enter {
+        compatible = "zmk,led-event";
+        event = "zmk_sleep_enter";
+        color = <255 255 255>;
+        fade = <500>;
     };
 };
