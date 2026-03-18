@@ -19,7 +19,7 @@
 #
 ---
 include:
-  - board: bluemicro840_v1
-    shield: corne_left
-  - board: bluemicro840_v1
-    shield: corne_right
+  - board: seeeduino_xiao_ble
+    shield: m3d_q_left
+  - board: seeeduino_xiao_ble
+    shield: m3d_q_right
