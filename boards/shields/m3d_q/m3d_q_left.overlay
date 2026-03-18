@@ -12,15 +12,18 @@
 };
 
 / {
-    chosen {
-        zmk,underglow = &underglow;
-    };
-
+    /* ---------------------------
+     * underglow LED
+     * --------------------------- */
     underglow: underglow {
         compatible = "zmk,rgb-underglow";
         gpios = <&xiao_d 5 GPIO_ACTIVE_HIGH>;
         chain-length = <1>;
         color-mapping = <0 1 2>;
+    };
+
+    chosen {
+        zmk,underglow = &underglow;
     };
 
     /* ---------------------------
