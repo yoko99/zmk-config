@@ -1,4 +1,3 @@
-
 #include "../m3d_q.dtsi"
 
 / {
@@ -84,7 +83,7 @@
 &pinctrl {
     spi3_default: spi3_default {
         group1 {
-            psels = <NRF_PSEL(SPIM_MOSI, 0, 5)>;
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 5)>; /* D5 */
         };
     };
 
@@ -106,7 +105,12 @@
         compatible = "worldsemi,ws2812-spi";
         reg = <0>;
         spi-max-frequency = <4000000>;
-        chain-length = <1>;   /* ←LED数に合わせる */
-        color-mapping = <1 0 2>;
+
+        chain-length = <1>;   /* LED数 */
+
+        spi-one-frame = <0x70>;
+        spi-zero-frame = <0x40>;
+
+        color-mapping = <0 1 2>; /* RGB */
     };
 };
