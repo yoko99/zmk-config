@@ -107,6 +107,6 @@
         reg = <0>;
         spi-max-frequency = <4000000>;
         chain-length = <1>;   /* ←LED数に合わせる */
-        color-mapping = <GRB>;
+        color-mapping = <1 0 2>;
     };
 };
