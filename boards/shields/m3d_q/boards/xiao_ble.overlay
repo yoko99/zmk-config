@@ -1,5 +1,5 @@
 
-#include "m3d_q.dtsi"
+#include "../m3d_q.dtsi"
 
 / {
     chosen {
