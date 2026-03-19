@@ -1,4 +1,4 @@
-#include "https://github.com/yoko99/zmk-config/blob/main/boards/shields/m3d_q/m3d_q.dtsi"
+#include "m3d_q.dtsi"
 
 / {
     chosen {
