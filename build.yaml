@@ -20,6 +20,6 @@
 ---
 include:
   - board: xiao_ble
-    shield: m3d_q_left
+    shield: m3d_q_left rgbled_adapter
   - board: xiao_ble
-    shield: m3d_q_right
+    shield: m3d_q_right rgbled_adapter
