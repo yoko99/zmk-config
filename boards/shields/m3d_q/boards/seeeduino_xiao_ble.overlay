@@ -3,13 +3,6 @@
         zmk,underglow = &led_strip;
     };
 
-    /* ここを追加（重要） */
-    aliases {
-        led-red = &led_strip;
-        led-green = &led_strip;
-        led-blue = &led_strip;
-    };
-
     /* ---------------------------
      * 外部電源（Underglow用）
      * --------------------------- */
