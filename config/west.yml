@@ -1,6 +1,6 @@
 manifest:
   defaults:
-    revision: main   # ← v0.3 から変更（最新版を使う）
+    revision: v0.3   # ← v0.3 から変更（最新版を使う）
 
   remotes:
     - name: zmkfirmware
@@ -15,7 +15,7 @@ manifest:
 
     - name: zmk-rgbled-widget
       remote: caksoylar
-      revision: main   # ← v0.3 → main に変更
+      revision: v0.3   # ← v0.3 → main に変更
 
   self:
     path: config
