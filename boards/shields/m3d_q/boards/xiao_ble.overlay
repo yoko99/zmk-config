@@ -3,13 +3,20 @@
         zmk,underglow = &led_strip;
     };
 
+    /* ここを追加（重要） */
+    aliases {
+        led-red = &led_strip;
+        led-green = &led_strip;
+        led-blue = &led_strip;
+    };
+
     /* ---------------------------
      * 外部電源（Underglow用）
      * --------------------------- */
     my_ext_power: ext_power {
         compatible = "zmk,ext-power-generic";
         label = "EXT_POWER";
-        control-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>; /* 任意の未使用ピン */
+        control-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
     };
 
     behaviors {
@@ -90,7 +97,7 @@
 &pinctrl {
     spi3_default: spi3_default {
         group1 {
-            psels = <NRF_PSEL(SPIM_MOSI, 0, 10)>; /* 推奨：P0.10 */
+            psels = <NRF_PSEL(SPIM_MOSI, 0, 10)>;
         };
     };
 
@@ -113,11 +120,11 @@
         reg = <0>;
         spi-max-frequency = <4000000>;
 
-        chain-length = <1>;   /* LED数 */
+        chain-length = <1>;
 
         spi-one-frame = <0x70>;
         spi-zero-frame = <0x40>;
 
-        color-mapping = <1 0 2>; /* GRB（WS2812はこれが多い） */
+        color-mapping = <1 0 2>;
     };
 };
