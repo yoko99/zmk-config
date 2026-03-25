@@ -9,7 +9,7 @@
     my_ext_power: ext_power {
         compatible = "zmk,ext-power-generic";
         label = "EXT_POWER";
-        control-gpios = <&gpio0 10 GPIO_ACTIVE_HIGH>; /* 任意の未使用ピン */
+        control-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>; /* 任意の未使用ピン */
     };
 
     behaviors {
