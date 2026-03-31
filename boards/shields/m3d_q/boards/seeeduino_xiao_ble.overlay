@@ -3,15 +3,6 @@
         zmk,underglow = &led_strip;
     };
 
-    /* ---------------------------
-     * 外部電源（Underglow用）
-     * --------------------------- */
-    my_ext_power: ext_power {
-        compatible = "zmk,ext-power-generic";
-        label = "EXT_POWER";
-        control-gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
-    };
-
     behaviors {
         l_base: l_base {
             compatible = "zmk,led-layer";
